@@ -125,47 +125,81 @@
              target almacenado dentro de TG_SOL3.mind.
         -->
 
-        <a-entity
-            mindar-image-target="targetIndex: 0">
+       <a-entity
+    mindar-image-target="targetIndex: 0">
+
+    <!-- =================================================
+         MODELO 3D DEL SOL
+         ================================================= -->
+
+    <a-gltf-model
+        src="modelos/sun1.glb"
+        position="0 0 0"
+        scale="1 1 1">
+    </a-gltf-model>
 
 
-            <!-- =================================================
-                 MODELO 3D DEL SOL
-                 =================================================
+    <!-- =================================================
+         NOMBRE DEL OBJETO
+         ================================================= -->
 
-                 <a-gltf-model> permite cargar modelos 3D
-                 en formato GLB o GLTF.
-
-                 Nuestro modelo se encuentra en:
-
-                 modelos/sun1.glb
-            -->
-
-            <a-gltf-model
-                src="modelos/sun1.glb"
-                position="0 0 0"
-                scale="1 1 1">
-            </a-gltf-model>
+    <a-text
+        value="EL SOL"
+        align="center"
+        position="0 -0.6 0"
+        color="#FFFFFF"
+        width="2">
+    </a-text>
 
 
-            <!-- =================================================
-                 NOMBRE DEL OBJETO CELESTE
-                 =================================================
+    <!-- =================================================
+         FICHA EDUCATIVA
+         =================================================
 
-                 Este texto aparecerá asociado al TARGET
-                 junto con el modelo 3D.
-            -->
+         Este plano funciona como fondo de la ficha.
+         Lo colocamos debajo del nombre para no cubrir
+         el modelo del Sol.
+    -->
 
-            <a-text
-                value="EL SOL"
-                align="center"
-                position="0 -0.6 0"
-                color="#FFFFFF"
-                width="2">
-            </a-text>
+    <a-plane
+        position="0 -1.15 -0.05"
+        width="2.4"
+        height="0.85"
+        color="#222222"
+        opacity="0.9">
+    </a-plane>
 
 
-        </a-entity>
+    <!-- =================================================
+         INFORMACIÓN EDUCATIVA
+         ================================================= -->
+
+    <a-text
+        value="Nuestra estrella"
+        align="center"
+        position="0 -0.9 0"
+        color="#FFFFFF"
+        width="2">
+    </a-text>
+
+    <a-text
+        value="El Sol es el centro del"
+        align="center"
+        position="0 -1.1 0"
+        color="#FFFFFF"
+        width="2">
+    </a-text>
+
+    <a-text
+        value="Sistema Solar."
+        align="center"
+        position="0 -1.3 0"
+        color="#FFFFFF"
+        width="2">
+    </a-text>
+
+
+</a-entity>
 
 
     </a-scene>
