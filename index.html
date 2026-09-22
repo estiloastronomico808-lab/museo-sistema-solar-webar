@@ -13,9 +13,36 @@
     <!-- MindAR -->
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
+    <style>
+        #estado {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+
+            padding: 12px 20px;
+
+            background: rgba(0, 0, 0, 0.75);
+            color: white;
+
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            text-align: center;
+
+            border-radius: 10px;
+        }
+    </style>
+
 </head>
 
 <body>
+
+    <!-- Mensaje de diagnóstico -->
+    <div id="estado">
+        BUSCANDO TARGET...
+    </div>
+
 
     <a-scene
         mindar-image="imageTargetSrc: targets/TG_SOL3.mind;"
@@ -42,6 +69,7 @@
 
         <!-- TARGET DEL SOL -->
         <a-entity
+            id="targetSol"
             mindar-image-target="targetIndex: 0">
 
             <!-- Modelo 3D del Sol -->
@@ -54,6 +82,32 @@
         </a-entity>
 
     </a-scene>
+
+
+    <!-- Diagnóstico -->
+    <script>
+
+        const estado = document.getElementById("estado");
+
+        const targetSol = document.getElementById("targetSol");
+
+
+        // Cuando MindAR encuentra el target
+        targetSol.addEventListener("targetFound", () => {
+
+            estado.textContent = "¡TARGET ENCONTRADO!";
+
+        });
+
+
+        // Cuando MindAR pierde el target
+        targetSol.addEventListener("targetLost", () => {
+
+            estado.textContent = "TARGET PERDIDO";
+
+        });
+
+    </script>
 
 </body>
 
