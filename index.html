@@ -18,6 +18,8 @@
 
     <style>
 
+        /* Mensaje principal de diagnóstico */
+
         #estado {
 
             position: fixed;
@@ -53,11 +55,19 @@
 <body>
 
 
-    <!-- Mensaje de estado -->
+    <!-- ========================================= -->
+    <!-- MENSAJE DE ESTADO                         -->
+    <!-- ========================================= -->
+
     <div id="estado">
         BUSCANDO TARGET...
     </div>
 
+
+
+    <!-- ========================================= -->
+    <!-- ESCENA A-FRAME                            -->
+    <!-- ========================================= -->
 
     <a-scene
 
@@ -74,7 +84,9 @@
         device-orientation-permission-ui="enabled: false">
 
 
-        <!-- Iluminación -->
+        <!-- ===================================== -->
+        <!-- ILUMINACIÓN                            -->
+        <!-- ===================================== -->
 
         <a-light
 
@@ -87,7 +99,10 @@
         </a-light>
 
 
-        <!-- Cámara -->
+
+        <!-- ===================================== -->
+        <!-- CÁMARA                                -->
+        <!-- ===================================== -->
 
         <a-camera
 
@@ -98,7 +113,10 @@
         </a-camera>
 
 
-        <!-- TARGET DEL SOL -->
+
+        <!-- ===================================== -->
+        <!-- TARGET DEL SOL                         -->
+        <!-- ===================================== -->
 
         <a-entity
 
@@ -107,24 +125,27 @@
             mindar-image-target="targetIndex: 0">
 
 
-            <!-- MODELO 3D DEL SOL -->
+            <!-- ================================= -->
+            <!-- MODELO 3D DEL SOL                 -->
+            <!-- ================================= -->
 
             <a-entity
 
-              <!-- OBJETO DE PRUEBA -->
-    <a-box
-        position="0 0 0"
-        rotation="0 0 0"
-        width="0.5"
-        height="0.5"
-        depth="0.5"
-        color="red">
-    </a-box>
+                id="modeloSol"
+
+                gltf-model="url(modelos/sun1.glb)"
+
+                position="0 0 0"
+
+                scale="1 1 1">
 
             </a-entity>
 
 
-            <!-- ESFERA ROJA DE PRUEBA -->
+
+            <!-- ================================= -->
+            <!-- ESFERA ROJA DE PRUEBA             -->
+            <!-- ================================= -->
 
             <a-sphere
 
@@ -137,7 +158,10 @@
             </a-sphere>
 
 
-            <!-- TEXTO DE ESTADO DEL MODELO -->
+
+            <!-- ================================= -->
+            <!-- ESTADO DEL MODELO                 -->
+            <!-- ================================= -->
 
             <a-text
 
@@ -163,68 +187,105 @@
 
 
 
-    <!-- DIAGNÓSTICO -->
+    <!-- ========================================= -->
+    <!-- DIAGNÓSTICO JAVASCRIPT                   -->
+    <!-- ========================================= -->
 
     <script>
 
 
-        const estado = document.getElementById("estado");
+        // -----------------------------------------
+        // ELEMENTOS DE LA PÁGINA
+        // -----------------------------------------
 
-        const targetSol = document.getElementById("targetSol");
+        const estado =
+            document.getElementById("estado");
 
-        const modeloSol = document.getElementById("modeloSol");
+        const targetSol =
+            document.getElementById("targetSol");
 
-        const modeloEstado = document.getElementById("modeloEstado");
+        const modeloSol =
+            document.getElementById("modeloSol");
 
-
-        // --------------------------------
-        // MINDAR
-        // --------------------------------
-
-        targetSol.addEventListener("targetFound", () => {
-
-            estado.textContent = "¡TARGET ENCONTRADO!";
-
-        });
-
-
-        targetSol.addEventListener("targetLost", () => {
-
-            estado.textContent = "TARGET PERDIDO";
-
-        });
+        const modeloEstado =
+            document.getElementById("modeloEstado");
 
 
 
-        // --------------------------------
-        // MODELO 3D
-        // --------------------------------
+        // -----------------------------------------
+        // MINDAR: TARGET ENCONTRADO
+        // -----------------------------------------
 
-        modeloSol.addEventListener("model-loaded", () => {
+        targetSol.addEventListener(
+            "targetFound",
+            () => {
 
-            modeloEstado.setAttribute(
-                "value",
-                "MODELO CARGADO"
-            );
+                estado.textContent =
+                    "¡TARGET ENCONTRADO!";
 
-            console.log("El modelo sun1.glb se cargó correctamente.");
-
-        });
+            }
+        );
 
 
-        modeloSol.addEventListener("model-error", (evento) => {
 
-            modeloEstado.setAttribute(
-                "value",
-                "ERROR AL CARGAR MODELO"
-            );
+        // -----------------------------------------
+        // MINDAR: TARGET PERDIDO
+        // -----------------------------------------
 
-            console.error(
-                "Error cargando sun1.glb:",
-                evento
-            );
+        targetSol.addEventListener(
+            "targetLost",
+            () => {
 
-        });
+                estado.textContent =
+                    "TARGET PERDIDO";
+
+            }
+        );
+
+
+
+        // -----------------------------------------
+        // MODELO 3D: CARGADO
+        // -----------------------------------------
+
+        modeloSol.addEventListener(
+            "model-loaded",
+            () => {
+
+                modeloEstado.setAttribute(
+                    "value",
+                    "MODELO CARGADO"
+                );
+
+                console.log(
+                    "El modelo sun1.glb se cargó correctamente."
+                );
+
+            }
+        );
+
+
+
+        // -----------------------------------------
+        // MODELO 3D: ERROR
+        // -----------------------------------------
+
+        modeloSol.addEventListener(
+            "model-error",
+            (evento) => {
+
+                modeloEstado.setAttribute(
+                    "value",
+                    "ERROR AL CARGAR MODELO"
+                );
+
+                console.error(
+                    "Error cargando sun1.glb:",
+                    evento
+                );
+
+            }
+        );
 
 
     </script>
