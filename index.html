@@ -3,27 +3,47 @@
 
 <head>
 
-    <!-- Codificación de caracteres -->
+    <!--
+        Define la codificación de caracteres.
+        UTF-8 permite utilizar correctamente caracteres
+        como á, é, í, ó, ñ, etc.
+    -->
     <meta charset="UTF-8">
 
-    <!-- Adaptación de la página a la pantalla del teléfono -->
+    <!--
+        Hace que la página se adapte correctamente
+        a la pantalla del teléfono.
+    -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Título de nuestra aplicación -->
+    <!--
+        Título que aparecerá en la pestaña del navegador.
+    -->
     <title>Museo Virtual del Sistema Solar</title>
 
 
-    <!-- =====================================================
+    <!-- =========================================================
          A-FRAME
-         Framework utilizado para crear la escena 3D
-         ===================================================== -->
+         =========================================================
+
+         A-Frame es el framework que utilizamos para crear
+         la escena 3D y mostrar nuestro modelo GLB.
+
+         En este proyecto utilizamos la versión 1.5.0.
+    -->
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
 
-    <!-- =====================================================
+    <!-- =========================================================
          MINDAR
-         Biblioteca utilizada para reconocer el TARGET
-         ===================================================== -->
+         =========================================================
+
+         MindAR permite utilizar la cámara del teléfono para
+         reconocer una imagen (TARGET) y colocar contenido
+         de realidad aumentada sobre ella.
+
+         La versión utilizada es la 1.2.5.
+    -->
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
 </head>
@@ -32,44 +52,78 @@
 <body>
 
 
-    <!-- =====================================================
-         ESCENA DE REALIDAD AUMENTADA
-         ===================================================== -->
+    <!-- =========================================================
+         ESCENA PRINCIPAL DE REALIDAD AUMENTADA
+         =========================================================
+
+         <a-scene> es el contenedor principal de A-Frame.
+
+         Aquí configuramos MindAR y establecemos el archivo
+         de targets que utilizará nuestra aplicación.
+    -->
+
+    <!--
+        imageTargetSrc indica dónde se encuentra nuestro
+        archivo de targets de MindAR.
+
+        En nuestro proyecto:
+
+        targets/
+        └── TG_SOL3.mind
+
+        Este archivo contiene la información necesaria
+        para reconocer nuestra imagen objetivo.
+        
+        vr-mode-ui desactiva la interfaz de realidad virtual.
+
+        device-orientation-permission-ui desactiva la interfaz
+        relacionada con los permisos de orientación del dispositivo.
+    -->
 
     <a-scene
-
-        <!-- Archivo que contiene nuestro TARGET -->
         mindar-image="imageTargetSrc: targets/TG_SOL3.mind;"
-
-        <!-- Desactiva la interfaz de realidad virtual -->
         vr-mode-ui="enabled: false"
-
-        <!-- Desactiva la solicitud de orientación del dispositivo -->
         device-orientation-permission-ui="enabled: false">
 
 
-        <!-- =================================================
+        <!-- =====================================================
              CÁMARA
-             ================================================= -->
+             =====================================================
 
-        <a-camera
+             Esta es la cámara utilizada por la escena de A-Frame.
 
-            <!-- Posición inicial de la cámara -->
+             MindAR utiliza la cámara del teléfono para observar
+             el mundo real y detectar nuestro TARGET.
+        -->
+
+        <!--
             position="0 0 0"
 
-            <!-- El usuario no controla manualmente la cámara -->
-            look-controls="enabled: false">
+            Coloca la cámara en el origen de la escena.
 
+            look-controls="enabled: false"
+
+            Desactiva los controles manuales de la cámara.
+            No queremos que el usuario controle la cámara
+            como en un videojuego.
+        -->
+
+        <a-camera
+            position="0 0 0"
+            look-controls="enabled: false">
         </a-camera>
 
 
-        <!-- =================================================
-             TARGET
-             =================================================
+        <!-- =====================================================
+             TARGET DE REALIDAD AUMENTADA
+             =====================================================
 
-             targetIndex: 0 significa que utilizaremos
-             el primer target contenido en TG_SOL3.mind.
-             ================================================= -->
+             Este elemento establece qué contenido aparecerá
+             cuando MindAR encuentre nuestro TARGET.
+
+             targetIndex: 0 significa que utilizamos el primer
+             target almacenado dentro de TG_SOL3.mind.
+        -->
 
         <a-entity
             mindar-image-target="targetIndex: 0">
@@ -77,43 +131,37 @@
 
             <!-- =================================================
                  MODELO 3D DEL SOL
-                 ================================================= -->
+                 =================================================
+
+                 <a-gltf-model> permite cargar modelos 3D
+                 en formato GLB o GLTF.
+
+                 Nuestro modelo se encuentra en:
+
+                 modelos/sun1.glb
+            -->
 
             <a-gltf-model
-
-                <!-- Archivo GLB que queremos mostrar -->
                 src="modelos/sun1.glb"
-
-                <!-- Posición respecto al TARGET -->
                 position="0 0 0"
-
-                <!-- Tamaño del modelo -->
                 scale="1 1 1">
-
             </a-gltf-model>
 
 
             <!-- =================================================
-                 NOMBRE DEL OBJETO
-                 ================================================= -->
+                 NOMBRE DEL OBJETO CELESTE
+                 =================================================
+
+                 Este texto aparecerá asociado al TARGET
+                 junto con el modelo 3D.
+            -->
 
             <a-text
-
-                <!-- Texto que aparecerá en realidad aumentada -->
                 value="EL SOL"
-
-                <!-- Centra el texto -->
                 align="center"
-
-                <!-- Posición del texto debajo del modelo -->
                 position="0 -0.6 0"
-
-                <!-- Color del texto -->
                 color="#FFFFFF"
-
-                <!-- Tamaño del texto -->
                 width="2">
-
             </a-text>
 
 
