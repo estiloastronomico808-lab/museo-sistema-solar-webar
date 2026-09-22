@@ -68,16 +68,20 @@
 
 
         <!-- TARGET DEL SOL -->
-        <a-entity
-            id="targetSol"
-            mindar-image-target="targetIndex: 0">
+       <!-- Modelo 3D del Sol -->
+<a-entity
+    id="modeloSol"
+    gltf-model="url(modelos/sun1.glb)"
+    position="0 0 0"
+    scale="1 1 1">
+</a-entity>
 
-            <!-- Modelo 3D del Sol -->
-            <a-entity
-                gltf-model="url(modelos/sun1.glb)"
-                position="0 0 0"
-                scale="1 1 1">
-            </a-entity>
+<!-- Esfera de prueba -->
+<a-sphere
+    radius="0.3"
+    color="red"
+    position="0 0 0">
+</a-sphere>
 
         </a-entity>
 
