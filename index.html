@@ -2,10 +2,12 @@
 <html lang="es">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Museo Virtual del Sistema Solar</title>
+
 
     <!-- A-Frame -->
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
@@ -13,99 +15,170 @@
     <!-- MindAR -->
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
+
     <style>
+
         #estado {
+
             position: fixed;
+
             top: 20px;
             left: 50%;
+
             transform: translateX(-50%);
+
             z-index: 9999;
 
             padding: 12px 20px;
 
             background: rgba(0, 0, 0, 0.75);
+
             color: white;
 
             font-family: Arial, sans-serif;
+
             font-size: 18px;
+
             text-align: center;
 
             border-radius: 10px;
+
         }
+
     </style>
 
 </head>
 
+
 <body>
 
-    <!-- Mensaje de diagnóstico -->
+
+    <!-- Mensaje de estado -->
     <div id="estado">
         BUSCANDO TARGET...
     </div>
 
 
     <a-scene
+
         mindar-image="imageTargetSrc: targets/TG_SOL3.mind;"
+
         embedded
+
         color-space="sRGB"
+
         renderer="colorManagement: true, physicallyCorrectLights"
+
         vr-mode-ui="enabled: false"
+
         device-orientation-permission-ui="enabled: false">
 
+
         <!-- Iluminación -->
+
         <a-light
+
             type="ambient"
+
             color="#ffffff"
+
             intensity="2">
+
         </a-light>
 
 
         <!-- Cámara -->
+
         <a-camera
+
             position="0 0 0"
+
             look-controls="enabled: false">
+
         </a-camera>
 
 
         <!-- TARGET DEL SOL -->
-       <!-- Modelo 3D del Sol -->
-<a-entity
-    id="modeloSol"
-    gltf-model="url(modelos/sun1.glb)"
-    position="0 0 0"
-    scale="1 1 1">
-</a-entity>
 
-<!-- Esfera de prueba -->
-<a-sphere
-    radius="0.3"
-    color="red"
-    position="0 0 0">
-</a-sphere>
+        <a-entity
 
-        <a-text
-    id="modeloEstado"
-    value="Cargando modelo..."
-    position="0 -0.8 0"
-    align="center"
-    color="white"
-    width="2">
-</a-text>
+            id="targetSol"
+
+            mindar-image-target="targetIndex: 0">
+
+
+            <!-- MODELO 3D DEL SOL -->
+
+            <a-entity
+
+                id="modeloSol"
+
+                gltf-model="url(modelos/sun1.glb)"
+
+                position="0 0 0"
+
+                scale="1 1 1">
+
+            </a-entity>
+
+
+            <!-- ESFERA ROJA DE PRUEBA -->
+
+            <a-sphere
+
+                radius="0.3"
+
+                color="red"
+
+                position="0 0 0">
+
+            </a-sphere>
+
+
+            <!-- TEXTO DE ESTADO DEL MODELO -->
+
+            <a-text
+
+                id="modeloEstado"
+
+                value="Cargando modelo..."
+
+                position="0 -0.8 0"
+
+                align="center"
+
+                color="white"
+
+                width="2">
+
+            </a-text>
+
 
         </a-entity>
+
 
     </a-scene>
 
 
-    <!-- Diagnóstico -->
+
+    <!-- DIAGNÓSTICO -->
+
     <script>
+
 
         const estado = document.getElementById("estado");
 
         const targetSol = document.getElementById("targetSol");
 
+        const modeloSol = document.getElementById("modeloSol");
 
-        // Cuando MindAR encuentra el target
+        const modeloEstado = document.getElementById("modeloEstado");
+
+
+        // --------------------------------
+        // MINDAR
+        // --------------------------------
+
         targetSol.addEventListener("targetFound", () => {
 
             estado.textContent = "¡TARGET ENCONTRADO!";
@@ -113,40 +186,47 @@
         });
 
 
-        // Cuando MindAR pierde el target
         targetSol.addEventListener("targetLost", () => {
 
             estado.textContent = "TARGET PERDIDO";
 
         });
 
+
+
+        // --------------------------------
+        // MODELO 3D
+        // --------------------------------
+
+        modeloSol.addEventListener("model-loaded", () => {
+
+            modeloEstado.setAttribute(
+                "value",
+                "MODELO CARGADO"
+            );
+
+            console.log("El modelo sun1.glb se cargó correctamente.");
+
+        });
+
+
+        modeloSol.addEventListener("model-error", (evento) => {
+
+            modeloEstado.setAttribute(
+                "value",
+                "ERROR AL CARGAR MODELO"
+            );
+
+            console.error(
+                "Error cargando sun1.glb:",
+                evento
+            );
+
+        });
+
+
     </script>
-    <script>
 
-    const modeloSol = document.getElementById("modeloSol");
-    const modeloEstado = document.getElementById("modeloEstado");
-
-    modeloSol.addEventListener("model-loaded", () => {
-
-        modeloEstado.setAttribute(
-            "value",
-            "MODELO CARGADO"
-        );
-
-    });
-
-    modeloSol.addEventListener("model-error", (evento) => {
-
-        modeloEstado.setAttribute(
-            "value",
-            "ERROR AL CARGAR MODELO"
-        );
-
-        console.error("Error cargando sun1.glb:", evento);
-
-    });
-
-</script>
 
 </body>
 
