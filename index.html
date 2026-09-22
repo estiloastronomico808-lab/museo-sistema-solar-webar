@@ -18,8 +18,6 @@
 
     <style>
 
-        /* Mensaje principal de diagnóstico */
-
         #estado {
 
             position: fixed;
@@ -55,19 +53,11 @@
 <body>
 
 
-    <!-- ========================================= -->
-    <!-- MENSAJE DE ESTADO                         -->
-    <!-- ========================================= -->
-
+    <!-- Mensaje de estado -->
     <div id="estado">
         BUSCANDO TARGET...
     </div>
 
-
-
-    <!-- ========================================= -->
-    <!-- ESCENA A-FRAME                            -->
-    <!-- ========================================= -->
 
     <a-scene
 
@@ -84,9 +74,7 @@
         device-orientation-permission-ui="enabled: false">
 
 
-        <!-- ===================================== -->
-        <!-- ILUMINACIÓN                            -->
-        <!-- ===================================== -->
+        <!-- Iluminación -->
 
         <a-light
 
@@ -99,10 +87,7 @@
         </a-light>
 
 
-
-        <!-- ===================================== -->
-        <!-- CÁMARA                                -->
-        <!-- ===================================== -->
+        <!-- Cámara -->
 
         <a-camera
 
@@ -113,10 +98,7 @@
         </a-camera>
 
 
-
-        <!-- ===================================== -->
-        <!-- TARGET DEL SOL                         -->
-        <!-- ===================================== -->
+        <!-- TARGET DEL SOL -->
 
         <a-entity
 
@@ -125,9 +107,7 @@
             mindar-image-target="targetIndex: 0">
 
 
-            <!-- ================================= -->
-            <!-- MODELO 3D DEL SOL                 -->
-            <!-- ================================= -->
+            <!-- MODELO 3D DEL SOL -->
 
             <a-entity
 
@@ -142,10 +122,7 @@
             </a-entity>
 
 
-
-            <!-- ================================= -->
-            <!-- ESFERA ROJA DE PRUEBA             -->
-            <!-- ================================= -->
+            <!-- ESFERA ROJA DE PRUEBA -->
 
             <a-sphere
 
@@ -158,10 +135,7 @@
             </a-sphere>
 
 
-
-            <!-- ================================= -->
-            <!-- ESTADO DEL MODELO                 -->
-            <!-- ================================= -->
+            <!-- TEXTO DE ESTADO DEL MODELO -->
 
             <a-text
 
@@ -187,105 +161,68 @@
 
 
 
-    <!-- ========================================= -->
-    <!-- DIAGNÓSTICO JAVASCRIPT                   -->
-    <!-- ========================================= -->
+    <!-- DIAGNÓSTICO -->
 
     <script>
 
 
-        // -----------------------------------------
-        // ELEMENTOS DE LA PÁGINA
-        // -----------------------------------------
+        const estado = document.getElementById("estado");
 
-        const estado =
-            document.getElementById("estado");
+        const targetSol = document.getElementById("targetSol");
 
-        const targetSol =
-            document.getElementById("targetSol");
+        const modeloSol = document.getElementById("modeloSol");
 
-        const modeloSol =
-            document.getElementById("modeloSol");
-
-        const modeloEstado =
-            document.getElementById("modeloEstado");
+        const modeloEstado = document.getElementById("modeloEstado");
 
 
+        // --------------------------------
+        // MINDAR
+        // --------------------------------
 
-        // -----------------------------------------
-        // MINDAR: TARGET ENCONTRADO
-        // -----------------------------------------
+        targetSol.addEventListener("targetFound", () => {
 
-        targetSol.addEventListener(
-            "targetFound",
-            () => {
+            estado.textContent = "¡TARGET ENCONTRADO!";
 
-                estado.textContent =
-                    "¡TARGET ENCONTRADO!";
+        });
 
-            }
-        );
+
+        targetSol.addEventListener("targetLost", () => {
+
+            estado.textContent = "TARGET PERDIDO";
+
+        });
 
 
 
-        // -----------------------------------------
-        // MINDAR: TARGET PERDIDO
-        // -----------------------------------------
+        // --------------------------------
+        // MODELO 3D
+        // --------------------------------
 
-        targetSol.addEventListener(
-            "targetLost",
-            () => {
+        modeloSol.addEventListener("model-loaded", () => {
 
-                estado.textContent =
-                    "TARGET PERDIDO";
+            modeloEstado.setAttribute(
+                "value",
+                "MODELO CARGADO"
+            );
 
-            }
-        );
+            console.log("El modelo sun1.glb se cargó correctamente.");
 
-
-
-        // -----------------------------------------
-        // MODELO 3D: CARGADO
-        // -----------------------------------------
-
-        modeloSol.addEventListener(
-            "model-loaded",
-            () => {
-
-                modeloEstado.setAttribute(
-                    "value",
-                    "MODELO CARGADO"
-                );
-
-                console.log(
-                    "El modelo sun1.glb se cargó correctamente."
-                );
-
-            }
-        );
+        });
 
 
+        modeloSol.addEventListener("model-error", (evento) => {
 
-        // -----------------------------------------
-        // MODELO 3D: ERROR
-        // -----------------------------------------
+            modeloEstado.setAttribute(
+                "value",
+                "ERROR AL CARGAR MODELO"
+            );
 
-        modeloSol.addEventListener(
-            "model-error",
-            (evento) => {
+            console.error(
+                "Error cargando sun1.glb:",
+                evento
+            );
 
-                modeloEstado.setAttribute(
-                    "value",
-                    "ERROR AL CARGAR MODELO"
-                );
-
-                console.error(
-                    "Error cargando sun1.glb:",
-                    evento
-                );
-
-            }
-        );
+        });
 
 
     </script>
