@@ -17,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Título de la página -->
-    <title>Prueba WebAR</title>
+    <title>Museo Virtual del Sistema Solar</title>
 
 
     <!-- =========================================================
@@ -135,71 +135,26 @@
              target almacenado dentro de TG_SOL3.mind.
         -->
 
-        <a-entity
-            mindar-image-target="targetIndex: 0">
+     <a-entity
+    mindar-image-target="targetIndex: 0">
 
+    <!-- Modelo 3D del Sol -->
+    <a-gltf-model
+        src="modelos/sun1.glb"
+        position="0 0 0"
+        scale="1 1 1">
+    </a-gltf-model>
 
-            <!-- =================================================
-                 MODELO 3D
-                 =================================================
+    <!-- Nombre del objeto celeste -->
+    <a-text
+        value="EL SOL"
+        align="center"
+        position="0 -0.6 0"
+        color="#FFFFFF"
+        width="2">
+    </a-text>
 
-                 <a-gltf-model> permite cargar un modelo 3D
-                 en formato GLB o GLTF.
-
-                 En nuestro proyecto estamos cargando:
-
-                 modelos/sun1.glb
-
-                 Este modelo aparecerá cuando MindAR detecte
-                 correctamente el TARGET.
-            -->
-
-            <a-gltf-model
-
-                <!--
-                    Ruta al archivo del modelo 3D.
-
-                    Dentro de nuestro repositorio tenemos:
-
-                    modelos/
-                        └── sun1.glb
-                -->
-                src="modelos/sun1.glb"
-
-
-                <!--
-                    Posición del modelo respecto al TARGET.
-
-                    Los tres valores representan:
-
-                    X = izquierda / derecha
-                    Y = abajo / arriba
-                    Z = adelante / atrás
-
-                    0 0 0 significa que el modelo comienza
-                    exactamente en el origen del TARGET.
-                -->
-                position="0 0 0"
-
-
-                <!--
-                    Tamaño del modelo.
-
-                    Los tres valores representan la escala
-                    en X, Y y Z.
-
-                    1 1 1 significa:
-
-                    X = tamaño original
-                    Y = tamaño original
-                    Z = tamaño original
-                -->
-                scale="1 1 1">
-
-            </a-gltf-model>
-
-
-        </a-entity>
+</a-entity>
 
 
     </a-scene>
