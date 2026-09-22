@@ -1,15 +1,47 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Museo Virtual del Sistema Solar</title>
+
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+
 </head>
+
 
 <body>
 
-    <h1>Museo Virtual del Sistema Solar</h1>
+    <a-scene>
 
-    <p>Bienvenidos a nuestro museo virtual interactivo.</p>
+        <!-- Iluminación -->
+        <a-light
+            type="ambient"
+            color="#ffffff"
+            intensity="2">
+        </a-light>
+
+
+        <!-- Nuestro modelo 3D -->
+        <a-entity
+            gltf-model="url(modelos/sun1.glb)"
+            position="0 1.5 -4"
+            scale="1 1 1">
+        </a-entity>
+
+
+        <!-- Cámara -->
+        <a-camera
+            position="0 0 0">
+        </a-camera>
+
+    </a-scene>
 
 </body>
+
 </html>
