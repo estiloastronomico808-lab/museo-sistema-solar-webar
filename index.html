@@ -2,39 +2,208 @@
 <html lang="es">
 
 <head>
+
+    <!--
+        Define la codificación de caracteres.
+        UTF-8 permite utilizar correctamente caracteres
+        como á, é, í, ó, ñ, etc.
+    -->
     <meta charset="UTF-8">
+
+    <!--
+        Hace que la página se adapte correctamente
+        a la pantalla del teléfono.
+    -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Título de la página -->
     <title>Prueba WebAR</title>
 
+
+    <!-- =========================================================
+         A-FRAME
+         =========================================================
+
+         A-Frame es el framework que utilizamos para crear
+         la escena 3D y mostrar nuestro modelo GLB.
+
+         En este proyecto utilizamos la versión 1.5.0.
+    -->
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
+
+    <!-- =========================================================
+         MINDAR
+         =========================================================
+
+         MindAR permite utilizar la cámara del teléfono para
+         reconocer una imagen (TARGET) y colocar contenido
+         de realidad aumentada sobre ella.
+
+         La versión utilizada es la 1.2.5.
+    -->
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
 </head>
+
 
 <body>
 
+
+    <!-- =========================================================
+         ESCENA PRINCIPAL DE REALIDAD AUMENTADA
+         =========================================================
+
+         <a-scene> es el contenedor principal de A-Frame.
+
+         Aquí configuramos MindAR para indicarle cuál es
+         el archivo de targets que debe utilizar.
+    -->
+
     <a-scene
+
+        <!--
+            imageTargetSrc indica dónde está nuestro archivo
+            de targets de MindAR.
+
+            En este caso:
+
+            targets/
+                └── TG_SOL3.mind
+
+            Este archivo contiene la información necesaria
+            para que MindAR pueda reconocer la imagen objetivo.
+        -->
         mindar-image="imageTargetSrc: targets/TG_SOL3.mind;"
+
+
+        <!--
+            Desactiva el botón/interfaz de realidad virtual
+            que A-Frame normalmente puede mostrar.
+        -->
         vr-mode-ui="enabled: false"
+
+
+        <!--
+            Desactiva la interfaz que solicita permisos
+            relacionados con la orientación del dispositivo.
+        -->
         device-orientation-permission-ui="enabled: false">
 
+
+        <!-- =====================================================
+             CÁMARA
+             =====================================================
+
+             Esta es la cámara utilizada por la escena de A-Frame.
+
+             MindAR utiliza la cámara del teléfono para observar
+             el mundo real y detectar nuestro TARGET.
+        -->
+
         <a-camera
+
+            <!--
+                Colocamos la cámara en el origen de la escena.
+            -->
             position="0 0 0"
+
+
+            <!--
+                Desactivamos los controles manuales de la cámara.
+
+                En nuestro proyecto no queremos que el usuario
+                controle la cámara como en un videojuego.
+                MindAR se encarga de la posición relacionada
+                con el TARGET.
+            -->
             look-controls="enabled: false">
+
         </a-camera>
+
+
+        <!-- =====================================================
+             TARGET DE REALIDAD AUMENTADA
+             =====================================================
+
+             Este elemento le indica a MindAR:
+
+             "Cuando encuentres el TARGET número 0,
+              coloca aquí el contenido de realidad aumentada."
+
+             targetIndex: 0 significa que utilizamos el primer
+             target almacenado dentro de TG_SOL3.mind.
+        -->
 
         <a-entity
             mindar-image-target="targetIndex: 0">
 
+
+            <!-- =================================================
+                 MODELO 3D
+                 =================================================
+
+                 <a-gltf-model> permite cargar un modelo 3D
+                 en formato GLB o GLTF.
+
+                 En nuestro proyecto estamos cargando:
+
+                 modelos/sun1.glb
+
+                 Este modelo aparecerá cuando MindAR detecte
+                 correctamente el TARGET.
+            -->
+
             <a-gltf-model
+
+                <!--
+                    Ruta al archivo del modelo 3D.
+
+                    Dentro de nuestro repositorio tenemos:
+
+                    modelos/
+                        └── sun1.glb
+                -->
                 src="modelos/sun1.glb"
+
+
+                <!--
+                    Posición del modelo respecto al TARGET.
+
+                    Los tres valores representan:
+
+                    X = izquierda / derecha
+                    Y = abajo / arriba
+                    Z = adelante / atrás
+
+                    0 0 0 significa que el modelo comienza
+                    exactamente en el origen del TARGET.
+                -->
                 position="0 0 0"
+
+
+                <!--
+                    Tamaño del modelo.
+
+                    Los tres valores representan la escala
+                    en X, Y y Z.
+
+                    1 1 1 significa:
+
+                    X = tamaño original
+                    Y = tamaño original
+                    Z = tamaño original
+                -->
                 scale="1 1 1">
+
             </a-gltf-model>
+
 
         </a-entity>
 
+
     </a-scene>
+
 
 </body>
 
