@@ -83,6 +83,15 @@
     position="0 0 0">
 </a-sphere>
 
+        <a-text
+    id="modeloEstado"
+    value="Cargando modelo..."
+    position="0 -0.8 0"
+    align="center"
+    color="white"
+    width="2">
+</a-text>
+
         </a-entity>
 
     </a-scene>
@@ -112,6 +121,32 @@
         });
 
     </script>
+    <script>
+
+    const modeloSol = document.getElementById("modeloSol");
+    const modeloEstado = document.getElementById("modeloEstado");
+
+    modeloSol.addEventListener("model-loaded", () => {
+
+        modeloEstado.setAttribute(
+            "value",
+            "MODELO CARGADO"
+        );
+
+    });
+
+    modeloSol.addEventListener("model-error", (evento) => {
+
+        modeloEstado.setAttribute(
+            "value",
+            "ERROR AL CARGAR MODELO"
+        );
+
+        console.error("Error cargando sun1.glb:", evento);
+
+    });
+
+</script>
 
 </body>
 
